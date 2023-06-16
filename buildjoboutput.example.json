@@ -1,0 +1,229 @@
+[
+  {
+    "buildTriggerId": "f12d30ef-1d5f-441b-af92-7879659fb0eb",
+    "createTime": "2023-06-16T00:28:11.504490Z",
+    "finishTime": "2023-06-16T00:32:32.751036Z",
+    "id": "b193d67f-7576-4acf-baba-2548654d7a65",
+    "logUrl": "https://console.cloud.google.com/cloud-build/builds/b193d67f-7576-4acf-baba-2548654d7a65?project=629313918760",
+    "logsBucket": "gs://629313918760.cloudbuild-logs.googleusercontent.com",
+    "name": "projects/629313918760/locations/global/builds/b193d67f-7576-4acf-baba-2548654d7a65",
+    "options": {
+      "dynamicSubstitutions": true,
+      "logging": "LEGACY",
+      "pool": {},
+      "substitutionOption": "ALLOW_LOOSE"
+    },
+    "projectId": "cloud-run-microservice-tmplt",
+    "queueTtl": "3600s",
+    "results": {
+      "buildStepImages": [
+        "sha256:3a9c30b3af6278a8ae0007d3a3bf00fff80ec3ed7ae4eb9bfa1772853101549b",
+        "",
+        "sha256:221c0c0d9a90f46f108bb888a1da9e99c82ff631e8b1c63b0223ea951752bd53",
+        "sha256:5b8dbea02685066164671dcce4556763398b4708dd10a7a688c290531b767797",
+        "sha256:2b11546e20de90d207d1066e7f5b83b9815aa7d7996bd1a8dc42c8b935d343b0",
+        "sha256:2b11546e20de90d207d1066e7f5b83b9815aa7d7996bd1a8dc42c8b935d343b0",
+        "",
+        "sha256:2b11546e20de90d207d1066e7f5b83b9815aa7d7996bd1a8dc42c8b935d343b0"
+      ],
+      "buildStepOutputs": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "source": {
+      "gitSource": {
+        "revision": "9aadce1eca54c332dd31072b1b0ad6f024e543eb",
+        "url": "https://github.com/GoogleCloudPlatform/cloud-run-microservice-template-java.git"
+      }
+    },
+    "sourceProvenance": {},
+    "startTime": "2023-06-16T00:28:12.015531610Z",
+    "status": "SUCCESS",
+    "steps": [
+      {
+        "args": [
+          "mvn",
+          "compile",
+          "checkstyle:check"
+        ],
+        "id": "Lint",
+        "name": "maven:3-openjdk-17",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:28:34.099645043Z",
+          "startTime": "2023-06-16T00:28:14.824293534Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:29:05.434360545Z",
+          "startTime": "2023-06-16T00:28:14.824293534Z"
+        }
+      },
+      {
+        "args": [
+          "mvn",
+          "test"
+        ],
+        "id": "Run Unit Tests",
+        "name": "maven:3-openjdk-17",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:29:05.436134336Z",
+          "startTime": "2023-06-16T00:29:05.434518073Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:29:38.662540707Z",
+          "startTime": "2023-06-16T00:29:05.434518073Z"
+        }
+      },
+      {
+        "args": [
+          "build",
+          "us-central1-docker.pkg.dev/cloud-run-microservice-tmplt/samples/cloud-run-microservice-template-java/microservice-template:9aadce1eca54c332dd31072b1b0ad6f024e543eb",
+          "--builder=gcr.io/buildpacks/builder:v1",
+          "--path=."
+        ],
+        "entrypoint": "pack",
+        "id": "Build Container Image",
+        "name": "gcr.io/k8s-skaffold/pack",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:29:41.075468904Z",
+          "startTime": "2023-06-16T00:29:38.662704556Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:30:52.852800398Z",
+          "startTime": "2023-06-16T00:29:38.662704556Z"
+        }
+      },
+      {
+        "args": [
+          "push",
+          "us-central1-docker.pkg.dev/cloud-run-microservice-tmplt/samples/cloud-run-microservice-template-java/microservice-template:9aadce1eca54c332dd31072b1b0ad6f024e543eb"
+        ],
+        "id": "Push Container Image",
+        "name": "gcr.io/cloud-builders/docker:latest",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:30:52.856044196Z",
+          "startTime": "2023-06-16T00:30:52.852929193Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:31:12.597124217Z",
+          "startTime": "2023-06-16T00:30:52.852929193Z"
+        }
+      },
+      {
+        "args": [
+          "-c",
+          "gcloud run deploy microservice-template-b193d67f-7576-4acf-baba-2548654d7a65 \\\n  --image us-central1-docker.pkg.dev/cloud-run-microservice-tmplt/samples/cloud-run-microservice-template-java/microservice-template:9aadce1eca54c332dd31072b1b0ad6f024e543eb \\\n  --region us-central1 \\\n  --no-allow-unauthenticated\n"
+        ],
+        "entrypoint": "/bin/bash",
+        "id": "Deploy to Cloud Run",
+        "name": "gcr.io/cloud-builders/gcloud:latest",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:31:12.600609Z",
+          "startTime": "2023-06-16T00:31:12.597289476Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:31:34.821713720Z",
+          "startTime": "2023-06-16T00:31:12.597289476Z"
+        }
+      },
+      {
+        "args": [
+          "-c",
+          "set -e\nsource /workspace/src/test/resources/common.sh\necho $(get_url b193d67f-7576-4acf-baba-2548654d7a65) > _service_url\necho \"Cloud Run URL for microservice-template-b193d67f-7576-4acf-baba-2548654d7a65 is $(cat _service_url)\"\necho $(get_idtoken) > _id_token\n"
+        ],
+        "entrypoint": "/bin/bash",
+        "env": [
+          "_SERVICE_NAME=microservice-template",
+          "_DEPLOY_REGION=us-central1",
+          "PROJECT_ID=cloud-run-microservice-tmplt"
+        ],
+        "id": "Retrieve Service URL",
+        "name": "gcr.io/cloud-builders/gcloud:latest",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:31:34.823503671Z",
+          "startTime": "2023-06-16T00:31:34.821874045Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:31:39.476563043Z",
+          "startTime": "2023-06-16T00:31:34.821874045Z"
+        }
+      },
+      {
+        "args": [
+          "-c",
+          "export BASE_URL=$(cat _service_url)\nexport ID_TOKEN=$(cat _id_token)\nmvn failsafe:integration-test failsafe:verify\n"
+        ],
+        "entrypoint": "/bin/bash",
+        "id": "Run System Tests",
+        "name": "maven:3-openjdk-17",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:31:39.478470674Z",
+          "startTime": "2023-06-16T00:31:39.476822504Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:32:23.144535691Z",
+          "startTime": "2023-06-16T00:31:39.476822504Z"
+        }
+      },
+      {
+        "args": [
+          "-c",
+          "gcloud artifacts docker images delete us-central1-docker.pkg.dev/cloud-run-microservice-tmplt/samples/cloud-run-microservice-template-java/microservice-template:9aadce1eca54c332dd31072b1b0ad6f024e543eb --quiet\ngcloud run services delete microservice-template-b193d67f-7576-4acf-baba-2548654d7a65 --region us-central1 --quiet\n"
+        ],
+        "entrypoint": "/bin/bash",
+        "id": "Delete image and service",
+        "name": "gcr.io/cloud-builders/gcloud",
+        "pullTiming": {
+          "endTime": "2023-06-16T00:32:23.146419918Z",
+          "startTime": "2023-06-16T00:32:23.144696446Z"
+        },
+        "status": "SUCCESS",
+        "timing": {
+          "endTime": "2023-06-16T00:32:32.097757158Z",
+          "startTime": "2023-06-16T00:32:23.144696446Z"
+        }
+      }
+    ],
+    "substitutions": {
+      "BRANCH_NAME": "main",
+      "COMMIT_SHA": "9aadce1eca54c332dd31072b1b0ad6f024e543eb",
+      "REF_NAME": "main",
+      "REPO_NAME": "cloud-run-microservice-template-java",
+      "REVISION_ID": "9aadce1eca54c332dd31072b1b0ad6f024e543eb",
+      "SHORT_SHA": "9aadce1",
+      "TRIGGER_BUILD_CONFIG_PATH": "src/test/resources/advance.cloudbuild.yaml",
+      "TRIGGER_NAME": "java-nightly",
+      "_DEPLOY_REGION": "us-central1",
+      "_GCR_HOSTNAME": "us-central1-docker.pkg.dev",
+      "_REPOSITORY": "samples",
+      "_SERVICE_NAME": "microservice-template"
+    },
+    "tags": [
+      "trigger-f12d30ef-1d5f-441b-af92-7879659fb0eb"
+    ],
+    "timeout": "3600s",
+    "timing": {
+      "BUILD": {
+        "endTime": "2023-06-16T00:32:32.097878482Z",
+        "startTime": "2023-06-16T00:28:14.192311311Z"
+      },
+      "FETCHSOURCE": {
+        "endTime": "2023-06-16T00:28:14.192216536Z",
+        "startTime": "2023-06-16T00:28:12.611282053Z"
+      }
+    }
+  }
+]
